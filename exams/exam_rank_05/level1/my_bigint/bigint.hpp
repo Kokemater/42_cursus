@@ -1,4 +1,5 @@
-
+#ifndef BIGINT_HPP
+#define BIGINT_HPP
 
 #include <iostream>
 #include <sstream>
@@ -46,3 +47,4 @@ class bigint
 };
 
 std::ostream& operator<<(std::ostream& output, const bigint& object);
+#endif
