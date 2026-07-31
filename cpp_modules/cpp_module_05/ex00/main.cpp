@@ -31,7 +31,7 @@ int	main(void)
 	std::cout << "\n--- Test 3: Grade too low ---" << std::endl;
 	try
 	{
-		Bureaucrat e("Eve", 151);
+		Bureaucrat e("Paco", 151);
 		std::cout << e << std::endl;
 	}
 	catch (std::exception &e)
