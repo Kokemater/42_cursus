@@ -5,7 +5,7 @@
 
 int main(void)
 {
-	std::cout << "=== Test 1: Vector - Find existing value ===" << std::endl;
+	std::cout << "=== Test 1 : Vector ===" << std::endl;
 	std::vector<int> vec;
 	vec.push_back(1);
 	vec.push_back(2);
@@ -23,7 +23,7 @@ int main(void)
 		std::cout << "Exception: " << e.what() << std::endl;
 	}
 
-	std::cout << "\n=== Test 2: Vector - Find non-existing value ===" << std::endl;
+	std::cout << "\n=== Test 2: Vector ===" << std::endl;
 	try
 	{
 		std::vector<int>::iterator it = easyfind(vec, 42);
@@ -34,7 +34,7 @@ int main(void)
 		std::cout << "Exception: " << e.what() << std::endl;
 	}
 
-	std::cout << "\n=== Test 3: List - Find existing value ===" << std::endl;
+	std::cout << "\n=== Test 3: List ===" << std::endl;
 	std::list<int> lst;
 	lst.push_back(10);
 	lst.push_back(20);
@@ -51,7 +51,7 @@ int main(void)
 		std::cout << "Exception: " << e.what() << std::endl;
 	}
 
-	std::cout << "\n=== Test 4: Deque - Find existing value ===" << std::endl;
+	std::cout << "\n=== Test 4: Deque ===" << std::endl;
 	std::deque<int> deq;
 	deq.push_back(100);
 	deq.push_back(200);

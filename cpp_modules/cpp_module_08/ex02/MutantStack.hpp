@@ -1,43 +1,36 @@
 #ifndef MUTANTSTACK_HPP
-# define MUTANTSTACK_HPP
+#define MUTANTSTACK_HPP
 
-# include <iostream>
-# include <string>
-# include <stack>
-# include <deque>
-# include <iterator>
+#include <stack>
+#include <deque>
 
-template <typename T>
-class MutantStack : public std::stack<T>
+template <typename T, typename Container = std::deque<T> >
+class MutantStack : public std::stack<T, Container>
 {
 public:
-	MutantStack(void) {}
-	MutantStack(const MutantStack &src) : std::stack<T>(src) {}
-	~MutantStack(void) {}
+    typedef typename Container::iterator iterator;
+    typedef typename Container::const_iterator const_iterator;
+    typedef typename Container::reverse_iterator reverse_iterator;
+    typedef typename Container::const_reverse_iterator const_reverse_iterator;
 
-	MutantStack &operator=(const MutantStack &rhs)
-	{
-		if (this != &rhs)
-			std::stack<T>::operator=(rhs);
-		return (*this);
-	}
+    MutantStack();
+    MutantStack(const MutantStack &other);
+    MutantStack &operator=(const MutantStack &other);
+    ~MutantStack();
 
-	typedef typename std::deque<T>::iterator iterator;
-	typedef typename std::deque<T>::const_iterator const_iterator;
-	typedef typename std::deque<T>::reverse_iterator reverse_iterator;
-	typedef typename std::deque<T>::const_reverse_iterator const_reverse_iterator;
+    iterator begin();
+    iterator end();
 
-	iterator begin(void) { return this->c.begin(); }
-	iterator end(void) { return this->c.end(); }
+    const_iterator begin() const;
+    const_iterator end() const;
 
-	const_iterator begin(void) const { return this->c.begin(); }
-	const_iterator end(void) const { return this->c.end(); }
+    reverse_iterator rbegin();
+    reverse_iterator rend();
 
-	reverse_iterator rbegin(void) { return this->c.rbegin(); }
-	reverse_iterator rend(void) { return this->c.rend(); }
-
-	const_reverse_iterator rbegin(void) const { return this->c.rbegin(); }
-	const_reverse_iterator rend(void) const { return this->c.rend(); }
+    const_reverse_iterator rbegin() const;
+    const_reverse_iterator rend() const;
 };
+
+#include "MutantStack.tpp"
 
 #endif
