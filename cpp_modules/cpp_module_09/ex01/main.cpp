@@ -2,6 +2,8 @@
 
 int main(int argc, char **argv)
 {
+	RPN rpn;
+
 	if (argc != 2)
 	{
 		std::cerr << "Error" << std::endl;
@@ -10,10 +12,9 @@ int main(int argc, char **argv)
 
 	try
 	{
-		int result = RPN::evaluate(argv[1]);
-		std::cout << result << std::endl;
+		rpn.calculate(argv[1]);
 	}
-	catch (std::exception &e)
+	catch (const std::exception &e)
 	{
 		std::cerr << e.what() << std::endl;
 		return (1);

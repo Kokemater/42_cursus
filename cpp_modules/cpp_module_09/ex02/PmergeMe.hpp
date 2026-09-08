@@ -2,11 +2,11 @@
 # define PMERGEME_HPP
 
 # include <iostream>
-# include <string>
 # include <vector>
 # include <deque>
-# include <algorithm>
+# include <string>
 # include <cstdlib>
+# include <stdexcept>
 # include <ctime>
 
 class PmergeMe
@@ -18,16 +18,28 @@ public:
 
 	PmergeMe &operator=(const PmergeMe &rhs);
 
-	static void sortVector(std::vector<int> &vec);
-	static void sortDeque(std::deque<int> &deq);
+	void run(int argc, char **argv);
 
 private:
-	static void mergeInsertSortVector(std::vector<int> &vec);
-	static void mergeInsertSortDeque(std::deque<int> &deq);
-	static void insertionSortVector(std::vector<int> &vec, int left, int right);
-	static void insertionSortDeque(std::deque<int> &deq, int left, int right);
-	static void mergeVector(std::vector<int> &vec, int left, int mid, int right);
-	static void mergeDeque(std::deque<int> &deq, int left, int mid, int right);
+	std::vector<int> _vector;
+	std::deque<int> _deque;
+
+	void parseInput(int argc, char **argv);
+
+	void fordJohnsonVector(std::vector<int> &container);
+	void fordJohnsonDeque(std::deque<int> &container);
+
+	void binaryInsertVector(std::vector<int> &container, int value);
+	void binaryInsertDeque(std::deque<int> &container, int value);
+
+	std::vector<int> generateJacobsthalVector(std::size_t size);
+	std::deque<int> generateJacobsthalDeque(std::size_t size);
+
+	void printVector(const std::vector<int> &container) const;
+	void printDeque(const std::deque<int> &container) const;
+
+	bool isSortedVector(const std::vector<int> &container) const;
+	bool isSortedDeque(const std::deque<int> &container) const;
 };
 
 #endif

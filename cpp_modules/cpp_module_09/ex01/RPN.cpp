@@ -5,8 +5,8 @@ RPN::RPN(void)
 }
 
 RPN::RPN(const RPN &src)
+	: _stack(src._stack)
 {
-	(void)src;
 }
 
 RPN::~RPN(void)
@@ -15,66 +15,81 @@ RPN::~RPN(void)
 
 RPN &RPN::operator=(const RPN &rhs)
 {
-	(void)rhs;
+	if (this != &rhs)
+		this->_stack = rhs._stack;
 	return (*this);
 }
 
-bool RPN::isOperator(const std::string &token)
+bool RPN::isOperator(char c) const
 {
-	return (token == "+" || token == "-" || token == "*" || token == "/");
+	return (c == '+' || c == '-' || c == '*' || c == '/');
 }
 
-int RPN::performOperation(int a, int b, const std::string &op)
+void RPN::applyOperator(char op)
 {
-	if (op == "+")
-		return (a + b);
-	else if (op == "-")
-		return (a - b);
-	else if (op == "*")
-		return (a * b);
-	else if (op == "/")
+	int right;
+	int left;
+	int result;
+
+	if (this->_stack.size() < 2)
+		throw std::runtime_error("Error");
+
+	right = this->_stack.top();
+	this->_stack.pop();
+
+	left = this->_stack.top();
+	this->_stack.pop();
+
+	if (op == '+')
+		result = left + right;
+	else if (op == '-')
+		result = left - right;
+	else if (op == '*')
+		result = left * right;
+	else
 	{
-		if (b == 0)
-			throw std::runtime_error("Division by zero");
-		return (a / b);
+		if (right == 0)
+			throw std::runtime_error("Error");
+		result = left / right;
 	}
-	return (0);
+
+	this->_stack.push(result);
 }
 
-int RPN::evaluate(const std::string &expression)
+void RPN::calculate(const std::string &expression)
 {
-	std::stack<int> stack;
-	std::string token;
-	std::istringstream iss(expression);
+	std::size_t i;
+	char c;
 
-	while (iss >> token)
+	i = 0;
+	while (i < expression.length())
 	{
-		if (isOperator(token))
+		c = expression[i];
+
+		if (c == ' ')
 		{
-			if (stack.size() < 2)
-				throw std::runtime_error("Error");
+			++i;
+			continue;
+		}
 
-			int b = stack.top();
-			stack.pop();
-			int a = stack.top();
-			stack.pop();
-
-			stack.push(performOperation(a, b, token));
+		if (c >= '0' && c <= '9')
+		{
+			this->_stack.push(c - '0');
+		}
+		else if (isOperator(c))
+		{
+			applyOperator(c);
 		}
 		else
 		{
-			if (token.length() > 1)
-				throw std::runtime_error("Error");
-
-			if (!std::isdigit(token[0]))
-				throw std::runtime_error("Error");
-
-			stack.push(std::atoi(token.c_str()));
+			throw std::runtime_error("Error");
 		}
+
+		++i;
 	}
 
-	if (stack.size() != 1)
+	if (this->_stack.size() != 1)
 		throw std::runtime_error("Error");
 
-	return (stack.top());
+	std::cout << this->_stack.top() << std::endl;
 }
